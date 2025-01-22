@@ -1,4 +1,5 @@
 import PostCreate from "./PostCreate";
+import PostLists from "./PostLists";
 
 function App() {
   return (
@@ -7,6 +8,10 @@ function App() {
       <div className="container">
         <h1>Create Post</h1>
         <PostCreate />
+      </div>
+      <div className="container">
+        <h1>Posts</h1>
+        <PostLists />
       </div>
     </>
   );
