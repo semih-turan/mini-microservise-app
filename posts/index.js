@@ -4,8 +4,11 @@ const { randomBytes } = require("crypto"); // randomBytes is a function that gen
 const cors = require("cors"); // cors is a middleware that allows cross-origin requests
 
 const app = express();
-app.use(bodyParser.json()); // bodyParser is a middleware that parses the body of the request
-app.use(cors()); // cors is a middleware that allows cross-origin requests
+app.use(cors({
+    origin: 'http://localhost:5173', // Vite'ın varsayılan portu
+    methods: ['GET', 'POST']
+}));
+app.use(express.json()); // Bu satırın cors'dan sonra olduğundan emin olun
 
 const posts = {};
 
