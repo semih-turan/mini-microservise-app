@@ -37,6 +37,13 @@ app.post("/posts", async (req, res) => {
   res.status(201).send(posts[id]);
 });
 
+// Event handler endpoint'i ekle
+app.post("/events", (req, res) => {
+  console.log("Event Received:", req.body.type);
+  
+  res.send({}); // Boş bir yanıt döndür
+});
+
 app.listen(4000, () => {
     console.log("Server is running on port 4000");
 });
