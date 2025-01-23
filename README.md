@@ -11,7 +11,8 @@ This project is a simple blog application that allows users to create posts and 
 The application consists of the following services:
 
 ### Services
-- **Posts Service** (Port 4000) 
+
+- **Posts Service** (Port 4000)
   - Handles post creation
   - Emits events when posts are created
 
@@ -36,6 +37,7 @@ The application consists of the following services:
   - Enables event replay functionality
 
 ### Frontend
+
 - **React Client** (Port 5173)
   - Built with React + TypeScript
   - Provides UI for creating posts and comments
@@ -64,6 +66,7 @@ The application consists of the following services:
 ## 🚦 Comment Moderation Flow
 
 Comments go through the following states:
+
 - **Pending** ⏳: Initial state when created
 - **Approved** ✅: Comment passes moderation
 - **Rejected** ❌: Comment fails moderation (contains blocked words)
@@ -71,7 +74,8 @@ Comments go through the following states:
 ## 🏃‍♂️ Running the Application
 
 1. Install dependencies in each service:
- ```bash 
+
+ ```bash
 cd posts && npm install
 cd comments && npm install
 cd query && npm install
@@ -80,7 +84,8 @@ cd event-bus && npm install
 cd client && npm install
 ```
 
-2. Start the services:
+1. Start the services:
+
 ```bash
 cd posts && npm start
 cd comments && npm start
@@ -102,13 +107,13 @@ cd client && npm start
 - CORS Configuration
 
 ## 📐 Project Structure
+
 ├── client/ # React frontend
 ├── posts/ # Posts service
 ├── comments/ # Comments service
 ├── query/ # Query service
 ├── moderation/ # Moderation service
 └── event-bus/ # Event distribution service
-
 
 ## 🔍 Implementation Details
 
