@@ -8,7 +8,7 @@ interface Post {
   title: string;
 }
 
-const PostLists = () => {
+const PostLists = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
   const [posts, setPosts] = useState<Record<string, Post>>({});
 
   const fetchPosts = async () => {
@@ -27,11 +27,13 @@ const PostLists = () => {
     return (
       <div
         key={post.id}
-        className="card"
+        className={`card ${isDarkTheme ? "bg-dark-subtle" : "bg-light"}`}
         style={{ width: "30%", marginBottom: "20px" }}
       >
         <div className="card-body">
-          <h3>{post.title}</h3>
+          <h3 className={isDarkTheme ? "text-light" : "text-dark"}>
+            {post.title}
+          </h3>
           <CommentList postId={post.id} />
           <CommentCreate postId={post.id} />
         </div>
