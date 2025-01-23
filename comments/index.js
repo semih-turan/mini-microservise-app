@@ -34,11 +34,11 @@ app.post("/posts/:id/comments", async (req, res) => {
   res.status(201).send(comments); // res.status(201).send(comments) is a function that sends a response with a status code of 201 and the comments
 });
 
-// Event handler endpoint'i ekle
+
 app.post("/events", (req, res) => {
   console.log("Event Received:", req.body.type);
 
-  res.send({}); // Boş bir yanıt döndür
+  res.send({});
 });
 
 app.listen(4001, () => {
