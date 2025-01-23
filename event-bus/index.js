@@ -5,17 +5,20 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   const event = req.body;
-  
-  try {
-    axios.post("http://localhost:4000/events", event); // Posts Service
-    axios.post("http://localhost:4001/events", event); // Comments Service
-    // axios.post("http://localhost:4002/events", event); // Query Service
 
+  try {
+    await Promise.all([
+      axios.post("http://localhost:4000/events", event),
+      axios.post("http://localhost:4001/events", event),
+      axios.post("http://localhost:4002/events", event),
+    ]);
+
+    console.log("Event Broadcasted:", event.type); // Debug için log ekleyelim
     res.send({ status: "OK" });
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("Error broadcasting event:", error.message);
     res.status(500).send({ status: "ERROR", message: error.message });
   }
 });

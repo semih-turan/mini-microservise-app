@@ -6,14 +6,17 @@ import CommentList from "./CommentList";
 interface Post {
   id: string;
   title: string;
+  comments: {
+    id: string;
+    content: string;
+  }[];
 }
 
 const PostLists = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
   const [posts, setPosts] = useState<Record<string, Post>>({});
 
   const fetchPosts = async () => {
-    const response = await axios.get("http://localhost:4000/posts");
-
+    const response = await axios.get("http://localhost:4002/posts");
     setPosts(response.data);
   };
 
@@ -34,7 +37,7 @@ const PostLists = ({ isDarkTheme }: { isDarkTheme: boolean }) => {
           <h3 className={isDarkTheme ? "text-light" : "text-dark"}>
             {post.title}
           </h3>
-          <CommentList postId={post.id} />
+          <CommentList comments={post.comments} />
           <CommentCreate postId={post.id} />
         </div>
       </div>
