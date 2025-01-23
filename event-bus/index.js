@@ -10,12 +10,12 @@ app.post("/events", async (req, res) => {
 
   try {
     await Promise.all([
-      axios.post("http://localhost:4000/events", event),
-      axios.post("http://localhost:4001/events", event),
-      axios.post("http://localhost:4002/events", event),
+      axios.post("http://localhost:4000/events", event), // Posts service
+      axios.post("http://localhost:4001/events", event), // Comments service
+      axios.post("http://localhost:4002/events", event), // Query service
+      axios.post("http://localhost:4003/events", event), // Moderation service
     ]);
 
-    console.log("Event Broadcasted:", event.type); // Debug için log ekleyelim
     res.send({ status: "OK" });
   } catch (error) {
     console.error("Error broadcasting event:", error.message);

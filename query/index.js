@@ -24,20 +24,25 @@ app.post("/events", (req, res) => {
     if (type === "PostCreated") {
       const { id, title } = data;
       posts[id] = { id, title, comments: [] };
-      console.log("Post created:", posts[id]);
     }
 
     if (type === "CommentCreated") {
-      const { id, content, postId } = data;
+      const { id, content, postId, status } = data;
       const post = posts[postId];
       if (post) {
-        post.comments.push({ id, content });
-        console.log("Comment added to post:", postId);
+        post.comments.push({ id, content, status });
       }
     }
 
-    console.log("Current posts state:", posts);
-    res.send({ status: "OK" });
+    if (type === "CommentUpdated") {
+      const { id, postId, status, content } = data;
+      const post = posts[postId];
+      const comment = post.comments.find((comment) => comment.id === id);
+      comment.status = status;
+      comment.content = content;
+    }
+    
+    res.send({});
   } catch (error) {
     console.error("Error processing event:", error);
     res.status(500).send({ status: "ERROR", message: error.message });

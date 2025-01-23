@@ -19,7 +19,7 @@ app.post("/posts/:id/comments", async (req, res) => {
   const { content } = req.body;
 
   const comments = commentsByPostId[req.params.id] || []; // comments is an array that stores the comments for the post
-  comments.push({ id: commentId, content }); // push is a function that adds an element to the end of an array
+  comments.push({ id: commentId, content, status: "pending" }); // push is a function that adds an element to the end of an array
   commentsByPostId[req.params.id] = comments; // commentsByPostId is an object that stores the comments for each post
 
   await axios.post("http://localhost:4005/events", {
@@ -28,19 +28,36 @@ app.post("/posts/:id/comments", async (req, res) => {
       id: commentId,
       content,
       postId: req.params.id,
+      status: "pending",
     },
   });
 
   res.status(201).send(comments); // res.status(201).send(comments) is a function that sends a response with a status code of 201 and the comments
 });
 
-
-app.post("/events", (req, res) => {
+app.post("/events", async (req, res) => {
   console.log("Event Received:", req.body.type);
+  const { type, data } = req.body;
 
+  if (type === "CommentModerated") {
+    const { id, postId, status, content } = data;
+    const comments = commentsByPostId[postId];
+    const comment = comments.find((comment) => comment.id === id);
+    comment.status = status;
+
+    await axios.post("http://localhost:4005/events", {
+      type: "CommentUpdated",
+      data: {
+        id,
+        postId,
+        status,
+        content,
+      },
+    });
+  }
   res.send({});
 });
 
 app.listen(4001, () => {
-    console.log("Server is running on port 4001");
+  console.log("Server is running on port 4001");
 });
