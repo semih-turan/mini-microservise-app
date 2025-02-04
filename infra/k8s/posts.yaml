@@ -1,8 +1,33 @@
+# Bu YAML dosyası, posts adında bir Kubernetes Pod'u tanımlar ve 
+# içinde tek bir container çalıştırır. Bu container, semihturan/posts:0.0.1 
+# Docker imajını kullanarak çalışır. Eğer bu imaj yerel olarak bulunmuyorsa, 
+# Kubernetes onu Docker Hub veya belirtilen özel bir container registry’den çeker.
+
+# Kubernetes API sürümünü belirler.
+# 'v1' temel Kubernetes nesneleri için kullanılır (Pod, Service, ConfigMap vb.).
 apiVersion: v1
+
+# Kubernetes nesne türünü (kind) belirler.
+# Burada bir "Pod" tanımlanıyor.
 kind: Pod
+
 metadata:
+  # Pod'un adını tanımlar. Bu isim Kubernetes içinde pod'u tanımlamak için kullanılır.
   name: posts
+
 spec:
+  # Pod'un içinde çalışacak container'ları tanımlar.
   containers:
-  - name: posts
-    image: semihturan/posts:0.0.1
+    # Pod içinde çalışacak tek bir container oluşturuyoruz.
+    - name: posts  # Container'ın adı. Bu isim pod içinde container'ı tanımlamak için kullanılır.
+    
+      # Kullanılacak Docker imajını tanımlar.
+      # "semihturan/posts:0.0.1" adındaki imaj, Docker Hub veya özel bir container registry’den çekilecektir.
+      image: semihturan/posts:0.0.1
+
+      # Container image’in nasıl çekileceğini belirler.
+      # Seçenekler:
+      # - "Always" -> Her zaman imajı registry’den çeker.
+      # - "IfNotPresent" -> Eğer yerel makinede yoksa registry’den çeker.
+      # - "Never" -> Asla registry’den imaj çekmez, yalnızca yereldeki imajı kullanır.
+      imagePullPolicy: IfNotPresent  # Eğer localde yoksa çek
